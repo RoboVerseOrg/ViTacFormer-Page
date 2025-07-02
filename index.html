@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="SkillBlender: Towards Versatile Humanoid Whole-Body Loco-Manipulation via Skill Blending">
+  <meta name="keywords" content="Robot Learning, Humanoid Robots, Loco-Manipulation, Reinforcement Learning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>
+    ViTacFormer: Learning Cross-Modal Representation for Visuo-Tactile Dexterous Manipulation
+  </title>
+
+  <link rel="icon" type="image/svg" href="./static/images/logo.svg" />
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://kit.fontawesome.com/19914a84eb.js" crossorigin="anonymous"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <script>
+    function updateMethodVideo() {
+        const task = document.getElementById("single-menu-task").value; // e.g. H1_BoxPush
+        const robot = task.split("_")[0]; // e.g. H1
+
+        const video_ours = document.getElementById("result-video-ours");
+        const video_ppo = document.getElementById("result-video-ppo");
+        const video_hb = document.getElementById("result-video-hb");
+        const video_seq = document.getElementById("result-video-seq");
+        const video_mcp = document.getElementById("result-video-mcp");
+        const video_humanplus = document.getElementById("result-video-humanplus");
+        video_ours.getElementsByTagName("video")[0].src = "static/videos/comparison/" + task + "_ours.mp4";
+        video_ppo.getElementsByTagName("video")[0].src = "static/videos/comparison/" + task + "_ppo.mp4";
+        video_hb.getElementsByTagName("video")[0].src = "static/videos/comparison/" + task + "_hb.mp4";
+        video_seq.getElementsByTagName("video")[0].src = "static/videos/comparison/" + task + "_seq.mp4";
+        video_mcp.getElementsByTagName("video")[0].src = "static/videos/comparison/" + task + "_mcp.mp4";
+        video_humanplus.getElementsByTagName("video")[0].src = "static/videos/comparison/" + task + "_humanplus.mp4";
+
+        if (robot != "H1") {
+          document.getElementById("result-video-second-row").style.display = "none";
+          document.getElementById("result-video-third-row").style.display = "none";
+        } else {
+          document.getElementById("result-video-second-row").style.display = "";
+          document.getElementById("result-video-third-row").style.display = "";
+        }
+        if (task == "H1_FarReach") {
+          video_hb.style.display = "none";
+          video_seq.getElementsByTagName("video")[0].style.width = "45%";
+          const br = document.createElement("br");
+          document.getElementById("result-video-second-row").appendChild(br);
+        } else {
+          video_hb.style.display = "";
+          video_seq.getElementsByTagName("video")[0].style.width = "90%";
+        }
+    }
+
+    function onLoadFunction() {
+      updateMethodVideo();
+    }
+</script>
+</head>
+
+
+<body onload="onLoadFunction();">
+<section class="hero is-link is-fullheight video" style="overflow: hidden; position:relative;">
+  <div class="hero-video" style="height: 100%; width: 177.77777778vh; min-width: 100%;min-height: 56.25vw;">
+    <video playsinline autoplay muted loop>
+      <source src="./static/videos/teaser-small.mp4" type="video/mp4">
+    </video>
+  </div>
+  <!-- <div class="hero-video is-hidden-tablet is-inline-block-mobile"
+    style="height: 154.28571428vw; width: 100%; min-width:64.81481481vh;min-height:100%;">
+    <video playsinline autoplay muted loop>
+      <source src="./static/videos/mobile_teaser_3.mp4" type="video/mp4">
+    </video>
+  </div> -->
+  <div class="is-hidden-tablet"
+    style="display: flex; justify-content: center; align-items: center; width: 100vw; height: 100vh; background-color: black; left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);">
+    <video playsinline autoplay muted loop style="width: 90%; height: auto; min-height: 100%;">
+      <source src="./static/videos/mobile_teaser_3.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="overlay"></div>
+  <!-- Hero head: will stick at the top -->
+  <div class="hero-head is-hidden-mobile">
+    <header class="navbar">
+      <div class="container is-size-5">
+        <div class="navbar-menu">
+          <div class="navbar-end">
+            <a class="navbar-item pl-4 pr-4 paper-link" href="https://arxiv.org/pdf/2506.09366">
+              <span class="icon" style="margin-right:5px;">
+                <img src="./static/images/pdf.svg" alt="PDF" />
+              </span>
+              <span>Paper</span>
+            </a>
+            <a class="navbar-item  pl-4 pr-4 arxiv-link" href="https://arxiv.org/abs/2506.09366">
+              <span class="icon" style="margin-right:5px;">
+                <img src="./static/images/arxiv.svg" alt="ArXiv" />
+              </span>
+              <span>arXiv</span> </a>
+            <a href="#video" class="navbar-item  pl-4 pr-4">
+              <span class="icon" style="margin-right:5px;">
+                <img src="./static/images/youtube.svg" alt="Youtube" />
+              </span>
+              <span>Video</span> </a>
+            <span class="navbar-item  pl-4 pr-4">
+              <a href="https://github.com/Humanoid-SkillBlender/SkillBlender" class="button is-inverted is-large github-link">
+                <span class="icon">
+                  <span class="icon">
+                    <img src="./static/images/github-mark.svg" alt="GitHub" />
+                  </span>
+                </span>
+                <span>Code</span>
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <!-- Hero content: will be in the middle -->
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title is-1 publication-title is-size-1-mobile" style="font-size: 12rem;">
+        ViTacFormer
+      </h1>
+      <h1 class="subtitle is-1 publication-title is-size-3-mobile" style="font-size: 4rem;">
+        Learning Cross-Modal Representation for Visuo-Tactile Dexterous Manipulation
+      </h1>
+      <!-- <h1 class="is-2 is-italic is-size-4-mobile" style="font-size: 2rem; opacity: 80%;">
+        Anonymous Submission
+      </h1> -->
+      <div class="column has-text-centered is-hidden-tablet">
+        <div class="publication-links">
+          <!-- PDF Link. -->
+          <span class="link-block">
+            <a href="https://arxiv.org/pdf/2506.09366" class="external-link button is-normal is-rounded is-dark paper-link">
+              <span class="icon">
+                <img src="./static/images/pdf.svg" alt="PDF" />
+              </span>
+              <span>Paper</span>
+            </a>
+          </span>
+          <span class="link-block">
+            <a href="https://arxiv.org/abs/2506.09366" class="external-link button is-normal is-rounded is-dark arxiv-link">
+              <span class="icon">
+                <img src="./static/images/arxiv.svg" alt="ArXiv" />
+              </span>
+              <span>arXiv</span>
+            </a>
+          </span>
+          <!-- Video Link. -->
+          <span class="link-block">
+            <a href="#video" class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                <img src="./static/images/youtube.svg" alt="Youtube" />
+              </span>
+              <span>Video</span>
+            </a>
+          </span>
+          <!-- Code Link. -->
+          <span class="link-block">
+            <a href="https://github.com/RoboVerseOrg/ViTacFormer"
+              class="external-link button is-normal is-rounded is-dark github-link">
+              <span class="icon">
+                <img src="./static/images/github-mark-white.svg" alt="GitHub" />
+              </span>
+              <span>Code</span>
+            </a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero footer: will stick at the bottom -->
+  <div class="hero-foot">
+    <nav class="tabs is-boxed is-fullwidth is-size-5">
+      <ul>
+        <li><a href="#video">Summary Video</a></li>
+        <li><a href="#framework">Framework: SkillBlender</a></li>
+        <li><a href="#benchmark">Benchmark: SkillBench</a></li>
+        <li><a href="#results">Experiment Results</a></li>
+        <!-- <li><a href="#qa">Q & A</a></li> -->
+      </ul>
+    </nav>
+  </div>
+</section>
+
+<section class="section is-small" id="overview">
+  <div class="container is-max-desktop">
+    <!-- <h2 class="title is-1 has-text-centered is-size-4-mobile">Overview</h2> -->
+    <img src="./static/images/teaser.jpg" alt="overview" />
+    <div class="content">
+      <p>
+        <b>SkillBlender</b> performs <b>versatile</b> autonomous humanoid loco-manipulation tasks within different embodiments and environments, given <b>only one or two</b> intuitive reward terms.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section is-small" id="video">
+  <div class="container is-max-desktop">
+    <h2 class="title is-1 has-text-centered is-size-3-mobile">Summary Video</h2>
+    <video controls width="100%">
+      <source src="./static/videos/summary_video_compressed.mp4" type="video/mp4">
+    </video>
+  </div>
+</section>
+
+<section class="section is-small" id="framework">
+  <div class="container is-max-desktop">
+    <h2 class="title is-1 has-text-centered is-size-3-mobile">Framework: SkillBlender</h2>
+    <h2 class="title is-3 is-size-4-mobile">Method Pipeline</h2>
+    <img src="./static/images/framework.jpg" alt="framework" />
+    <div class="content">
+      <p>
+        Overview of <b>SkillBlender</b>. We first pretrain goal-conditioned primitive expert skills that are task-agnostic, reusable, and physically interpretable, and then reuse and blend these skills to achieve complex whole-body loco-manipulation tasks given <b>only one or two task-specific reward terms</b>.
+      </p>
+    </div>
+    <h2 class="title is-3 is-size-4-mobile">A Pretrain-then-Blend Paradigm</h2>
+    <figure>
+    <video autoplay muted loop playsinline controls src="static/videos/method.mp4" width="100%"></video>
+    <figcaption></figcaption>
+    </figure>
+    <br>
+    <h2 class="title is-3 is-size-4-mobile">Low-Level Primitive Skills (on H1)</h2>
+    <br>
+    <div class="columns is-centered">
+      <div class="columns is-centered has-text-centered">
+        <figure>
+        <video autoplay muted loop playsinline controls src="static/videos/skill/h1_walking.mp4" width="90%"
+              style="border-radius:10px; "></video>
+        <figcaption>Walking</figcaption>
+        </figure>
+      </div>
+      <div class="columns is-centered has-text-centered">
+        <figure>
+        <video autoplay muted loop playsinline controls src="static/videos/skill/h1_reaching.mp4" width="90%"
+              style="border-radius:10px; "></video>
+        <figcaption>Reaching</figcaption>
+        </figure>
+      </div>
+      <div class="columns is-centered has-text-centered">
+        <figure>
+        <video autoplay muted loop playsinline controls src="static/videos/skill/h1_squatting.mp4" width="90%"
+              style="border-radius:10px; "></video>
+        <figcaption>Squatting</figcaption>
+        </figure>
+      </div>
+      <div class="columns is-centered has-text-centered">
+        <figure>
+        <video autoplay muted loop playsinline controls src="static/videos/skill/h1_stepping.mp4" width="90%"
+              style="border-radius:10px; "></video>
+        <figcaption>Stepping</figcaption>
+        </figure>
+      </div>
+    </div>
+    <h2 class="title is-3 is-size-4-mobile">High-Level Loco-Manipulation Tasks (on H1)</h2>
+    <div>
+      <b>NOTE</b>: All below high-level task rollouts are performed by our <b>SkillBlender</b>, which is fully autonomous, <font color="red"><b>WITHOUT</b></font> any hand-crafted trajectories or heuristic poses, and <font color="green"><b>WITH</b></font> <u><b>only one or two reward terms</b></u> for guidance.
+    </div>
+    <br><br>
+    <div class="columns is-centered">
+      <div class="columns is-centered has-text-centered">
+        <figure>
+        <video autoplay muted loop playsinline controls src="static/videos/tasks/h1_task_reach.mp4" width="90%"
+              style="border-radius:10px; "></video>
+        <figcaption>FarReach</figcaption>
+        </figure>
+      </div>
+      <div class="columns is-centered has-text-centered">
+        <figure>
+        <video autoplay muted loop playsinline controls src="static/videos/tasks/h1_task_button.mp4" width="90%"
+              style="border-radius:10px; "></video>
+        <figcaption>ButtonPress</figcaption>
+        </figure>
+      </div>
+      <div class="columns is-centered has-text-centered">
+        <figure>
+        <video autoplay muted loop playsinline controls src="static/videos/tasks/h1_task_cabinet.mp4" width="90%"
+              style="border-radius:10px; "></video>
+        <figcaption>CabinetClose</figcaption>
+        </figure>
+      </div>
+      <div class="columns is-centered has-text-centered">
+        <figure>
+        <video autoplay muted loop playsinline controls src="static/videos/tasks/h1_task_ball.mp4" width="90%"
+              style="border-radius:10px; "></video>
+        <figcaption>FootballShoot</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <div class="columns is-centered has-text-centered">
+        <figure>
+        <video autoplay muted loop playsinline controls src="static/videos/tasks/h1_task_box.mp4" width="90%"
+              style="border-radius:10px; "></video>
+        <figcaption>BoxPush</figcaption>
+        </figure>
+      </div>
+      <div class="columns is-centered has-text-centered">
+        <figure>
+        <video autoplay muted loop playsinline controls src="static/videos/tasks/h1_task_lift.mp4" width="90%"
+              style="border-radius:10px; "></video>
+        <figcaption>PackageLift</figcaption>
+        </figure>
+      </div>
+      <div class="columns is-centered has-text-centered">
+        <figure>
+        <video autoplay muted loop playsinline controls src="static/videos/tasks/h1_task_transfer.mp4" width="90%"
+              style="border-radius:10px; "></video>
+        <figcaption>BoxTransfer</figcaption>
+        </figure>
+      </div>
+      <div class="columns is-centered has-text-centered">
+        <figure>
+        <video autoplay muted loop playsinline controls src="static/videos/tasks/h1_task_carry.mp4" width="90%"
+              style="border-radius:10px; "></video>
+        <figcaption>PackageCarry</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section is-small has-background-black has-text-light" id="benchmark">
+  <div class="container is-max-desktop">
+    <h2 class="title is-1 has-text-centered is-size-3-mobile has-text-white">Benchmark: SkillBench</h2>
+    <div class="container is-max-desktop">
+      <img src="./static/images/benchmark.png" alt="overview" />
+      <div class="content">
+        <p>
+          Our <b>SkillBench</b> is a parallel, cross-embodiment, and diverse simulated benchmark containing three embodiments, four primitive skills, and eight loco-manipulation tasks.
+        </p>
+      </div>
+    </div>
+    <br>
+    <h2 class="title is-3 is-size-4-mobile has-text-white">Parallel Simulation</h2>
+    <figure>
+    <video autoplay muted loop playsinline src="static/videos/benchmark/army_short.mp4" width="100%"></video>
+    <figcaption></figcaption>
+    </figure>
+    <br>
+    <h2 class="title is-3 is-size-4-mobile has-text-white">Cross-Embodiment</h2>
+    <figure>
+    <video autoplay muted loop playsinline src="static/videos/benchmark/combo_manip.mp4" width="100%"></video>
+    <figcaption></figcaption>
+    </figure>
+    <br>
+    <h2 class="title is-3 is-size-4-mobile has-text-white">Diverse Tasks</h2>
+    <figure>
+    <video autoplay muted loop playsinline src="static/videos/teaser-small.mp4" width="100%"></video>
+    <figcaption></figcaption>
+    </figure>
+    <br>
+  </div>
+</section>
+
+
+<section class="section is-small" id="results">
+  <div class="container is-max-desktop">
+    <h2 class="title is-1 has-text-centered is-size-3-mobile">Experiment Results</h2>
+    <h2 class="title is-3 is-size-4-mobile">Qualitative Comparison</h2>
+    <div class="columns is-centered">
+      <div class="column has-text-centered">
+          Choose task: 
+          <div class="select is-small">
+              <select id="single-menu-task" onchange="updateMethodVideo()">
+                  <option value="H1_FarReach">H1 FarReach</option>
+                  <option value="H1_BoxPush" selected="selected">H1 BoxPush</option>
+                  <option value="H1_PackageCarry">H1 PackageCarry</option>
+                  <option value="G1_FarReach">G1 FarReach</option>
+                  <option value="G1_ButtonPress">G1 ButtonPress</option>
+                  <option value="H1-2_FarReach">H1-2 FarReach</option>
+                  <option value="H1-2_ButtonPress">H1-2 ButtonPress</option>
+              </select>
+          </div>
+          <br><br><br>
+          <div class="columns is-centered" id="result-video-first-row">
+            <div class="columns is-centered has-text-centered" id="result-video-ours">
+              <figure>
+              <video autoplay muted loop playsinline controls src="" width="90%"
+                    style="border-radius:10px; "></video>
+              <figcaption><b>SkillBlender (Ours)</b></figcaption>
+              </figure>
+            </div>
+            <div class="columns is-centered has-text-centered" id="result-video-ppo">
+              <figure>
+              <video autoplay muted loop playsinline controls src="" width="90%"
+                    style="border-radius:10px; "></video>
+              <figcaption>PPO</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div class="columns is-centered" id="result-video-second-row">
+            <div class="columns is-centered has-text-centered" id="result-video-hb">
+              <figure>
+              <video autoplay muted loop playsinline controls src="" width="90%"
+                    style="border-radius:10px; "></video>
+              <figcaption>HumanoidBench</figcaption>
+              </figure>
+            </div>
+            <div class="columns is-centered has-text-centered" id="result-video-seq">
+              <figure>
+              <video autoplay muted loop playsinline controls src="" width="90%"
+                    style="border-radius:10px; "></video>
+              <figcaption>Sequential HRL</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div class="columns is-centered" id="result-video-third-row">
+            <div class="columns is-centered has-text-centered" id="result-video-mcp">
+              <figure>
+              <video autoplay muted loop playsinline controls src="" width="90%"
+                    style="border-radius:10px; "></video>
+              <figcaption>MCP</figcaption>
+              </figure>
+            </div>
+            <div class="columns is-centered has-text-centered" id="result-video-humanplus">
+              <figure>
+              <video autoplay muted loop playsinline controls src="" width="90%"
+                    style="border-radius:10px; "></video>
+              <figcaption>HumanPlus</figcaption>
+              </figure>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="content">
+      <p>
+        Qualitative comparison between different methods. Our <b>SkillBlender</b> not only achieves <b>higher task accuracy</b>, but also <b>avoids reward hacking</b> and yields more natural and feasible movements.
+      </p>
+    </div>
+    <h2 class="title is-3 is-size-4-mobile">Skill Blending Decomposition</h2>
+    <br>
+    <div class="columns is-centered">
+      <div class="columns is-centered has-text-centered">
+        <figure>
+        <video autoplay muted loop playsinline controls src="static/videos/weight.mp4" width="90%"
+              style="border-radius:10px; "></video>
+        <figcaption></figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="content">
+      <p>
+        Visualization of whole-body per-joint weights at different task stages. More <font color="blue"><b>blue</b></font> means more Reaching, and more <font color="green"><b>green</b></font> means more Walking. This visualization highlights the <b>spatial-temporal decomposition</b> of our skill blending, where the two skills interleave rather than one skill dominating the overall motion.
+      </p>
+    </div>
+
+    <h2 class="title is-3 is-size-4-mobile">Primitive Skill Deployment</h2>
+    <br>
+    <div class="columns is-centered">
+      <div class="columns is-centered has-text-centered">
+        <figure>
+        <video autoplay muted loop playsinline controls src="static/videos/real/real_reaching.mp4" width="80%"
+              style="border-radius:10px; "></video>
+        <figcaption>Reaching</figcaption>
+        </figure>
+      </div>
+      <div class="columns is-centered has-text-centered">
+        <figure>
+        <video autoplay muted loop playsinline controls src="static/videos/real/real_squatting.mp4" width="80%"
+              style="border-radius:10px; "></video>
+        <figcaption>Squatting</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="content">
+      <p>
+        We also provide a sim2real toolkit support that deploys our simulation-trained primitive skill policies in the real world using a Unitree H1 humanoid robot.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="box pt-6 pb-6">
+      <div class="columns is-max-desktop is-centered ">
+        <div class="column is-four-fifths is-centered">
+          <h2 class="title is-2 has-text-centered is-size-5-mobile">Try out SkillBlender and SkillBench!</h2>
+          <video autoplay muted loop playsinline width="100%">
+            <source src="./static/videos/try_it.mp4" type="video/mp4">
+          </video>
+          <div class="content">
+            We open-sourced our <b>SkillBlender</b> framework and <b>SkillBench</b> benchmark. Feel free download the code and try it out yourself! We look forward to more and more open-source humanoid research!
+          </div>
+          <div class="content">
+          </div>
+          <div class="has-text-centered">
+            <a href="https://github.com/Humanoid-SkillBlender/SkillBlender" class="github-link">
+              <button class="button is-primary">Download Code</button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section is-small">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 is-size-4-mobile">Our Team</h2>
+    <div class="container has-text-centered">
+      <div class="publication-authors is-flex justify-content is-justify-content-space-around">
+        <div class="author-block has-text-centered has-addons-centered">
+          <figure class="image is-128x128">
+            <a href="https://yuxuank.com/">
+              <img class="is-rounded
+                      " src="./static/images/author/yuxuan.jpg" alt="Yuxuan Kuang">
+            </a>
+          </figure>
+          <a href="https://yuxuank.com/">Yuxuan Kuang</a><sup>1,2,3*</sup>
+        </div>
+        <div class="author-block has-text-centered has-addons-centered">
+          <figure class="image is-128x128">
+            <a href="https://geng-haoran.github.io/">
+              <img class="is-rounded
+                      " src="./static/images/author/haoran.jpg" alt="Haoran Geng">
+            </a>
+          </figure>
+          <a href="https://geng-haoran.github.io/">Haoran Geng</a><sup>4*</sup>
+        </div>
+        <div class="author-block has-text-centered has-addons-centered">
+          <figure class="image is-128x128">
+            <a href="https://stanfordasl.github.io/people/amine-elhafsi/">
+              <img class="is-rounded
+                      " src="./static/images/author/amine.jpg" alt="Amine Elhafsi">
+            </a>
+          </figure>
+          <a href="https://stanfordasl.github.io/people/amine-elhafsi/">Amine Elhafsi</a><sup>2</sup>
+        </div>
+        <div class="author-block has-text-centered has-addons-centered">
+          <figure class="image is-128x128">
+            <a href="https://dotandung.github.io/">
+              <img class="is-rounded
+                      " src="./static/images/author/tan-dzung.jpg" alt="Tan-Dzung Do">
+            </a>
+          </figure>
+          <a href="https://dotandung.github.io/">Tan-Dzung Do</a><sup>3</sup>
+        </div>
+      </div>
+      <br>
+      <div class="publication-authors is-flex justify-content is-justify-content-space-around">
+        <div class="author-block has-text-centered has-addons-centered">
+          <figure class="image is-128x128">
+            <a href="https://people.eecs.berkeley.edu/~pabbeel/">
+              <img class="is-rounded
+                      " src="./static/images/author/pieter.jpg" alt="Pieter Abbeel">
+            </a>
+          </figure>
+          <a href="https://people.eecs.berkeley.edu/~pabbeel/">Pieter Abbeel</a><sup>4</sup>
+        </div>
+        <div class="author-block has-text-centered has-addons-centered">
+          <figure class="image is-128x128">
+            <a href="https://people.eecs.berkeley.edu/~malik/">
+              <img class="is-rounded
+                      " src="./static/images/author/jitendra.jpg" alt="Jitendra Malik">
+            </a>
+          </figure>
+          <a href="https://people.eecs.berkeley.edu/~malik/">Jitendra Malik</a><sup>4</sup>
+        </div>
+        <div class="author-block has-text-centered has-addons-centered">
+          <figure class="image is-128x128">
+            <a href="https://web.stanford.edu/people/pavone">
+              <img class="is-rounded
+                      " src="./static/images/author/marco.jpg" alt="Marco Pavone">
+            </a>
+          </figure>
+          <a href="https://web.stanford.edu/people/pavone">Marco Pavone</a><sup>2</sup>
+        </div>
+        <div class="author-block has-text-centered has-addons-centered">
+          <figure class="image is-128x128">
+            <a href="https://yuewang.xyz/">
+              <img class="is-rounded
+                      " src="./static/images/author/yue.jpg" alt="Yue Wang">
+            </a>
+          </figure>
+          <a href="https://yuewang.xyz/">Yue Wang</a><sup>1</sup>
+        </div>
+      </div>
+
+      <br>
+      <div class="publication-authors">
+        <span class="author-block"><sup>1</sup>University of Southern California, </span>
+        <span class="author-block"><sup>2</sup>Stanford University, </span>
+        <br>
+        <span class="author-block"><sup>3</sup>Peking University, </span>
+        <span class="author-block"><sup>4</sup>University of California, Berkeley</span>
+        <br>
+        <span class="author-block">* Equal contributions</span>
+      </div>
+
+
+    </div>
+    <br>
+    <pre><code>@article{kuang2025skillblender,
+  title={SkillBlender: Towards Versatile Humanoid Whole-Body Loco-Manipulation via Skill Blending},
+  author={Kuang, Yuxuan and Geng, Haoran and Elhafsi, Amine and Do, Tan-Dzung and Abbeel, Pieter and Malik, Jitendra and Pavone, Marco and Wang, Yue},
+  journal={arXiv preprint arXiv:2506.09366},
+  year={2025}
+}</code></pre>
+    <br>
+    <p>
+      If you have any questions, please <a href="mailto:yuxuank@cs.cmu.edu">contact Yuxuan Kuang</a>.
+    </p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Website template modified from <a href="https://umi-on-legs.github.io/">UMI on Legs</a>, <a href="https://robo-point.github.io/">RoboPoint</a>, <a href="https://nerfies.github.io/">NeRFies</a>, and <a
+              href="https://www.cs.columbia.edu/~huy/scalingup/">Scaling Up Distilling Down</a>.
+          </p>
+          <p>
+            This website is licensed under a <a rel="license"
+              href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+              Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow and modify the <a
+              href="https://github.com/nerfies/nerfies.github.io">source
+              code</a> of this website as long as
+            you link back to the <a href="https://nerfies.github.io/">NeRFies</a> page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+
+</html>
