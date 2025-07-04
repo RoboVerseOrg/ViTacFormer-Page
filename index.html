@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-    content="SkillBlender: Towards Versatile Humanoid Whole-Body Loco-Manipulation via Skill Blending">
+    content="ViTacFormer: Learning Cross-Modal Representation for Visuo-Tactile Dexterous Manipulation">
   <meta name="keywords" content="Robot Learning, Humanoid Robots, Loco-Manipulation, Reinforcement Learning">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>
@@ -116,7 +116,7 @@
               </span>
               <span>Video</span> </a>
             <span class="navbar-item  pl-4 pr-4">
-              <a href="https://github.com/Humanoid-SkillBlender/SkillBlender" class="button is-inverted is-large github-link">
+              <a href="https://github.com/RoboVerseOrg/ViTacFormer" class="button is-inverted is-large github-link">
                 <span class="icon">
                   <span class="icon">
                     <img src="./static/images/github-mark.svg" alt="GitHub" />
@@ -191,10 +191,9 @@
     <nav class="tabs is-boxed is-fullwidth is-size-5">
       <ul>
         <li><a href="#video">Summary Video</a></li>
-        <li><a href="#framework">Framework: SkillBlender</a></li>
-        <li><a href="#benchmark">Benchmark: SkillBench</a></li>
+        <li><a href="#framework">Hardware Setup</a></li>
+        <li><a href="#benchmark">Framework: ViTacFormer</a></li>
         <li><a href="#results">Experiment Results</a></li>
-        <!-- <li><a href="#qa">Q & A</a></li> -->
       </ul>
     </nav>
   </div>
@@ -206,7 +205,7 @@
     <img src="./static/images/vitacformer_hardware.png" alt="overview" />
     <div class="content">
       <p>
-        <b>We present ViTacFormer, a representation-learning approach that couples a cross-attention encoder to fuse high-resolution vision and touch with an autoregressive tactile prediction head that anticipates future contact signals.
+        <b>Dexterous manipulation is a cornerstone capability for robotic systems aiming to interact with the physical world in a human-like manner. Although vision-based methods have advanced rapidly, tactile sensing remains crucial for fine-grained control, particularly in unstructured or visually occluded settings. We present ViTacFormer, a representation-learning approach that couples a cross-attention encoder to fuse high-resolution vision and touch with an autoregressive tactile prediction head that anticipates future contact signals. Building on this architecture, we devise an easy-to-challenging curriculum that steadily refines the visual-tactile latent space, boosting both accuracy and robustness. The learned cross-modal representation drives imitation learning for multi-fingered hands, enabling precise and adaptive manipulation. Across a suite of challenging real-world benchmarks, our method achieves approximately 50% higher success rates than prior state-of-the-art systems. To our knowledge, it is also the first to autonomously complete long-horizon dexterous manipulation tasks that demand highly precise control with an anthropomorphic hand, successfully executing up to 11 sequential stages and sustaining continuous operation for 2.5 minutes.
       </p>
     </div>
   </div>
