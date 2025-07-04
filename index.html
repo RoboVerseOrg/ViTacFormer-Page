@@ -74,7 +74,7 @@
 <section class="hero is-link is-fullheight video" style="overflow: hidden; position:relative;">
   <div class="hero-video" style="height: 100%; width: 177.77777778vh; min-width: 100%;min-height: 56.25vw;">
     <video playsinline autoplay muted loop>
-      <source src="./static/videos/teaser-small.mp4" type="video/mp4">
+      <source src="./static/videos/hamburger_cut.mp4" type="video/mp4">
     </video>
   </div>
   <!-- <div class="hero-video is-hidden-tablet is-inline-block-mobile"
@@ -147,7 +147,7 @@
         <div class="publication-links">
           <!-- PDF Link. -->
           <span class="link-block">
-            <a href="https://arxiv.org/pdf/2506.09366" class="external-link button is-normal is-rounded is-dark paper-link">
+            <a href="https://arxiv.org/abs/2506.15953" class="external-link button is-normal is-rounded is-dark paper-link">
               <span class="icon">
                 <img src="./static/images/pdf.svg" alt="PDF" />
               </span>
@@ -155,7 +155,7 @@
             </a>
           </span>
           <span class="link-block">
-            <a href="https://arxiv.org/abs/2506.09366" class="external-link button is-normal is-rounded is-dark arxiv-link">
+            <a href="https://arxiv.org/abs/2506.15953" class="external-link button is-normal is-rounded is-dark arxiv-link">
               <span class="icon">
                 <img src="./static/images/arxiv.svg" alt="ArXiv" />
               </span>
@@ -203,10 +203,10 @@
 <section class="section is-small" id="overview">
   <div class="container is-max-desktop">
     <!-- <h2 class="title is-1 has-text-centered is-size-4-mobile">Overview</h2> -->
-    <img src="./static/images/teaser.jpg" alt="overview" />
+    <img src="./static/images/vitacformer_hardware.png" alt="overview" />
     <div class="content">
       <p>
-        <b>SkillBlender</b> performs <b>versatile</b> autonomous humanoid loco-manipulation tasks within different embodiments and environments, given <b>only one or two</b> intuitive reward terms.
+        <b>We present ViTacFormer, a representation-learning approach that couples a cross-attention encoder to fuse high-resolution vision and touch with an autoregressive tactile prediction head that anticipates future contact signals.
       </p>
     </div>
   </div>
@@ -223,9 +223,9 @@
 
 <section class="section is-small" id="framework">
   <div class="container is-max-desktop">
-    <h2 class="title is-1 has-text-centered is-size-3-mobile">Framework: SkillBlender</h2>
+    <h2 class="title is-1 has-text-centered is-size-3-mobile">Framework: ViTacFormer</h2>
     <h2 class="title is-3 is-size-4-mobile">Method Pipeline</h2>
-    <img src="./static/images/framework.jpg" alt="framework" />
+    <img src="./static/images/pipeline.jpg" alt="framework" />
     <div class="content">
       <p>
         Overview of <b>SkillBlender</b>. We first pretrain goal-conditioned primitive expert skills that are task-agnostic, reusable, and physically interpretable, and then reuse and blend these skills to achieve complex whole-body loco-manipulation tasks given <b>only one or two task-specific reward terms</b>.
@@ -525,10 +525,10 @@
           <figure class="image is-128x128">
             <a href="https://yuxuank.com/">
               <img class="is-rounded
-                      " src="./static/images/author/yuxuan.jpg" alt="Yuxuan Kuang">
+                      " src="./static/images/author/hengliang.jpeg" alt="Liang Heng">
             </a>
           </figure>
-          <a href="https://yuxuank.com/">Yuxuan Kuang</a><sup>1,2,3*</sup>
+          <a href="https://liangheng121.github.io/">Liang Heng</a><sup>1,2,3*</sup>
         </div>
         <div class="author-block has-text-centered has-addons-centered">
           <figure class="image is-128x128">
@@ -537,26 +537,19 @@
                       " src="./static/images/author/haoran.jpg" alt="Haoran Geng">
             </a>
           </figure>
-          <a href="https://geng-haoran.github.io/">Haoran Geng</a><sup>4*</sup>
+          <a href="https://geng-haoran.github.io/">Haoran Geng</a><sup>1*†</sup>
         </div>
+
         <div class="author-block has-text-centered has-addons-centered">
           <figure class="image is-128x128">
-            <a href="https://stanfordasl.github.io/people/amine-elhafsi/">
+            <a href="https://openreview.net/profile?id=~Kaifeng_Zhang1">
               <img class="is-rounded
-                      " src="./static/images/author/amine.jpg" alt="Amine Elhafsi">
+                      " src="./static/images/author/KaifengZhang.jpg" alt="Kaifeng Zhang">
             </a>
           </figure>
-          <a href="https://stanfordasl.github.io/people/amine-elhafsi/">Amine Elhafsi</a><sup>2</sup>
+          <a href="https://geng-haoran.github.io/">Kaifeng Zhang</a><sup>3*</sup>
         </div>
-        <div class="author-block has-text-centered has-addons-centered">
-          <figure class="image is-128x128">
-            <a href="https://dotandung.github.io/">
-              <img class="is-rounded
-                      " src="./static/images/author/tan-dzung.jpg" alt="Tan-Dzung Do">
-            </a>
-          </figure>
-          <a href="https://dotandung.github.io/">Tan-Dzung Do</a><sup>3</sup>
-        </div>
+
       </div>
       <br>
       <div class="publication-authors is-flex justify-content is-justify-content-space-around">
@@ -567,7 +560,7 @@
                       " src="./static/images/author/pieter.jpg" alt="Pieter Abbeel">
             </a>
           </figure>
-          <a href="https://people.eecs.berkeley.edu/~pabbeel/">Pieter Abbeel</a><sup>4</sup>
+          <a href="https://people.eecs.berkeley.edu/~pabbeel/">Pieter Abbeel</a><sup>1</sup>
         </div>
         <div class="author-block has-text-centered has-addons-centered">
           <figure class="image is-128x128">
@@ -576,51 +569,37 @@
                       " src="./static/images/author/jitendra.jpg" alt="Jitendra Malik">
             </a>
           </figure>
-          <a href="https://people.eecs.berkeley.edu/~malik/">Jitendra Malik</a><sup>4</sup>
-        </div>
-        <div class="author-block has-text-centered has-addons-centered">
-          <figure class="image is-128x128">
-            <a href="https://web.stanford.edu/people/pavone">
-              <img class="is-rounded
-                      " src="./static/images/author/marco.jpg" alt="Marco Pavone">
-            </a>
-          </figure>
-          <a href="https://web.stanford.edu/people/pavone">Marco Pavone</a><sup>2</sup>
-        </div>
-        <div class="author-block has-text-centered has-addons-centered">
-          <figure class="image is-128x128">
-            <a href="https://yuewang.xyz/">
-              <img class="is-rounded
-                      " src="./static/images/author/yue.jpg" alt="Yue Wang">
-            </a>
-          </figure>
-          <a href="https://yuewang.xyz/">Yue Wang</a><sup>1</sup>
+          <a href="https://people.eecs.berkeley.edu/~malik/">Jitendra Malik</a><sup>1</sup>
         </div>
       </div>
 
       <br>
       <div class="publication-authors">
-        <span class="author-block"><sup>1</sup>University of Southern California, </span>
-        <span class="author-block"><sup>2</sup>Stanford University, </span>
+        <span class="author-block"><sup>1</sup>University of California, Berkeley,  </span>
         <br>
-        <span class="author-block"><sup>3</sup>Peking University, </span>
-        <span class="author-block"><sup>4</sup>University of California, Berkeley</span>
+        <span class="author-block"><sup>2</sup>Peking University, </span>
+        <span class="author-block"><sup>3</sup>Sharpa </span>
         <br>
-        <span class="author-block">* Equal contributions</span>
+        <span class="author-block">* Equal contributions, † Project lead</span>
+        <br>
+        <span class="author-block">Corresponding to: Haoran Geng (ghr@berkeley.edu)</span>
       </div>
 
 
     </div>
     <br>
-    <pre><code>@article{kuang2025skillblender,
-  title={SkillBlender: Towards Versatile Humanoid Whole-Body Loco-Manipulation via Skill Blending},
-  author={Kuang, Yuxuan and Geng, Haoran and Elhafsi, Amine and Do, Tan-Dzung and Abbeel, Pieter and Malik, Jitendra and Pavone, Marco and Wang, Yue},
-  journal={arXiv preprint arXiv:2506.09366},
-  year={2025}
+    <pre><code>@misc{heng2025vitacformerlearningcrossmodalrepresentation,
+      title={ViTacFormer: Learning Cross-Modal Representation for Visuo-Tactile Dexterous Manipulation}, 
+      author={Liang Heng and Haoran Geng and Kaifeng Zhang and Pieter Abbeel and Jitendra Malik},
+      year={2025},
+      eprint={2506.15953},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2506.15953}, 
 }</code></pre>
     <br>
     <p>
-      If you have any questions, please <a href="mailto:yuxuank@cs.cmu.edu">contact Yuxuan Kuang</a>.
+      If you have any questions, please contact <a href="mailto:ghr@berkeley.edu">Haoran Geng</a>.
     </p>
   </div>
 </section>
@@ -631,7 +610,9 @@
       <div class="column is-8">
         <div class="content">
           <p>
-            Website template modified from <a href="https://umi-on-legs.github.io/">UMI on Legs</a>, <a href="https://robo-point.github.io/">RoboPoint</a>, <a href="https://nerfies.github.io/">NeRFies</a>, and <a
+            Website template modified from 
+            <a href="hhttps://usc-gvl.github.io/SkillBlender-web/">SkillBlender</a>,
+            <a href="https://umi-on-legs.github.io/">UMI on Legs</a>, <a href="https://robo-point.github.io/">RoboPoint</a>, <a href="https://nerfies.github.io/">NeRFies</a>, and <a
               href="https://www.cs.columbia.edu/~huy/scalingup/">Scaling Up Distilling Down</a>.
           </p>
           <p>
