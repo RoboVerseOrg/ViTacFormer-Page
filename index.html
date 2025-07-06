@@ -190,7 +190,7 @@
   <div class="hero-foot">
     <nav class="tabs is-boxed is-fullwidth is-size-5">
       <ul>
-        <li><a href="#video">Summary Video</a></li>
+        <li><a href="#video">Summary</a></li>
         <li><a href="#framework">Hardware Setup</a></li>
         <li><a href="#benchmark">Framework: ViTacFormer</a></li>
         <li><a href="#results">Experiment Results</a></li>
@@ -199,10 +199,14 @@
   </div>
 </section>
 
-<section class="section is-small" id="overview">
+
+
+<section class="section is-small" id="video">
   <div class="container is-max-desktop">
-    <!-- <h2 class="title is-1 has-text-centered is-size-4-mobile">Overview</h2> -->
-    <img src="./static/images/vitacformer_hardware.png" alt="overview" />
+    <h2 class="title is-1 has-text-centered is-size-3-mobile">Summary</h2>
+    <video controls width="100%">
+      <source src="./static/videos/summary_video_compressed.mp4" type="video/mp4">
+    </video>
     <div class="content">
       <p>
         <b>Dexterous manipulation is a cornerstone capability for robotic systems aiming to interact with the physical world in a human-like manner. Although vision-based methods have advanced rapidly, tactile sensing remains crucial for fine-grained control, particularly in unstructured or visually occluded settings. We present ViTacFormer, a representation-learning approach that couples a cross-attention encoder to fuse high-resolution vision and touch with an autoregressive tactile prediction head that anticipates future contact signals. Building on this architecture, we devise an easy-to-challenging curriculum that steadily refines the visual-tactile latent space, boosting both accuracy and robustness. The learned cross-modal representation drives imitation learning for multi-fingered hands, enabling precise and adaptive manipulation. Across a suite of challenging real-world benchmarks, our method achieves approximately 50% higher success rates than prior state-of-the-art systems. To our knowledge, it is also the first to autonomously complete long-horizon dexterous manipulation tasks that demand highly precise control with an anthropomorphic hand, successfully executing up to 11 sequential stages and sustaining continuous operation for 2.5 minutes.
@@ -211,12 +215,12 @@
   </div>
 </section>
 
-<section class="section is-small" id="video">
+<section class="section is-small" id="overview">
   <div class="container is-max-desktop">
-    <h2 class="title is-1 has-text-centered is-size-3-mobile">Summary Video</h2>
-    <video controls width="100%">
-      <source src="./static/videos/summary_video_compressed.mp4" type="video/mp4">
-    </video>
+    <h2 class="title is-1 has-text-centered is-size-3-mobile">Hardware Setup</h2>
+    <!-- <h2 class="title is-1 has-text-centered is-size-4-mobile">Overview</h2> -->
+    <img src="./static/images/vitacformer_hardware.png" alt="overview" />
+    
   </div>
 </section>
 
