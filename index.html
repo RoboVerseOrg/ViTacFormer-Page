@@ -27,7 +27,7 @@
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
 
-  <script>
+<!--   <script>
     function updateMethodVideo() {
         const task = document.getElementById("single-menu-task").value; // e.g. H1_BoxPush
         const robot = task.split("_")[0]; // e.g. H1
@@ -66,6 +66,24 @@
     function onLoadFunction() {
       updateMethodVideo();
     }
+</script> -->
+<script>
+  function updateVideos() {
+    const task = document.getElementById("task-selector").value;
+    const basePath = `./static/videos/${task}/`;
+
+    const videoSucc = document.querySelector("#video-succ video");
+    const videoFail1 = document.querySelector("#video-fail1 video");
+    const videoFail2 = document.querySelector("#video-fail2 video");
+
+    videoSucc.src = basePath + "succ.mp4";
+    videoFail1.src = basePath + "fail_1.mp4";
+    videoFail2.src = basePath + "fail_2.mp4";
+  }
+
+  function onLoadFunction() {
+    updateVideos();
+  }
 </script>
 </head>
 
@@ -379,16 +397,46 @@
           Choose task: 
           <div class="select is-small">
               <select id="single-menu-task" onchange="updateMethodVideo()">
-                  <option value="H1_FarReach">H1 FarReach</option>
+                <option value="book_flip" selected>book_flip</option>
+                <option value="cap_twist">cap_twist</option>
+                <option value="peg_insertion">peg_insertion</option>
+                <option value="vase_wipe">vase_wipe</option>
+<!--                   <option value="H1_FarReach">H1 FarReach</option>
                   <option value="H1_BoxPush" selected="selected">H1 BoxPush</option>
                   <option value="H1_PackageCarry">H1 PackageCarry</option>
                   <option value="G1_FarReach">G1 FarReach</option>
                   <option value="G1_ButtonPress">G1 ButtonPress</option>
                   <option value="H1-2_FarReach">H1-2 FarReach</option>
-                  <option value="H1-2_ButtonPress">H1-2 ButtonPress</option>
+                  <option value="H1-2_ButtonPress">H1-2 ButtonPress</option> -->
               </select>
           </div>
-          <br><br><br>
+        <br><br>
+
+        <div class="columns is-centered" id="video-row">
+          <div class="column has-text-centered" id="video-succ">
+            <figure>
+              <video autoplay muted loop playsinline controls src="" width="100%" style="border-radius:10px;"></video>
+              <figcaption><b>Success</b></figcaption>
+            </figure>
+          </div>
+          <div class="column has-text-centered" id="video-fail1">
+            <figure>
+              <video autoplay muted loop playsinline controls src="" width="100%" style="border-radius:10px;"></video>
+              <figcaption><b>Failure 1</b></figcaption>
+            </figure>
+          </div>
+          <div class="column has-text-centered" id="video-fail2">
+            <figure>
+              <video autoplay muted loop playsinline controls src="" width="100%" style="border-radius:10px;"></video>
+              <figcaption><b>Failure 2</b></figcaption>
+            </figure>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+<!--           <br><br><br>
           <div class="columns is-centered" id="result-video-first-row">
             <div class="columns is-centered has-text-centered" id="result-video-ours">
               <figure>
@@ -438,7 +486,7 @@
             </div>
           </div>
       </div>
-    </div>
+    </div> -->
     <div class="content">
       <p>
         Qualitative comparison between different methods. Our <b>SkillBlender</b> not only achieves <b>higher task accuracy</b>, but also <b>avoids reward hacking</b> and yields more natural and feasible movements.
