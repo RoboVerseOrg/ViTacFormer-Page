@@ -27,7 +27,7 @@
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
 
-  <script>
+<!--   <script>
     function updateMethodVideo() {
         const task = document.getElementById("single-menu-task").value; // e.g. H1_BoxPush
         const robot = task.split("_")[0]; // e.g. H1
@@ -66,6 +66,47 @@
     function onLoadFunction() {
       updateMethodVideo();
     }
+</script> -->
+<!-- <script>
+  function updateMethodVideo() {
+    const task = document.getElementById("task-selector").value;
+    const basePath = `./static/videos/${task}/`;
+
+    const videoSucc = document.querySelector("#video-succ video");
+    const videoFail1 = document.querySelector("#video-fail1 video");
+    const videoFail2 = document.querySelector("#video-fail2 video");
+
+    videoSucc.src = basePath + "succ.mp4";
+    videoFail1.src = basePath + "fail_1.mp4";
+    videoFail2.src = basePath + "fail_2.mp4";
+  }
+
+  function onLoadFunction() {
+    updateMethodVideo();
+  }
+</script> -->
+<script>
+  function updateMethodVideo() {
+    const task = document.getElementById("single-menu-task").value;
+    const basePath = `static/videos/${task}/`;
+
+    const videoSucc = document.querySelector("#video-succ video");
+    const videoFail1 = document.querySelector("#video-fail1 video");
+    const videoFail2 = document.querySelector("#video-fail2 video");
+
+    videoSucc.src = basePath + "succ.mp4";
+    videoSucc.load();
+
+    videoFail1.src = basePath + "fail_1.mp4";
+    videoFail1.load();
+
+    videoFail2.src = basePath + "fail_2.mp4";
+    videoFail2.load();
+  }
+
+  function onLoadFunction() {
+    updateMethodVideo();
+  }
 </script>
 </head>
 
@@ -74,7 +115,7 @@
 <section class="hero is-link is-fullheight video" style="overflow: hidden; position:relative;">
   <div class="hero-video" style="height: 100vh; width: 100vw; position: absolute; top: 0; left: 0;">
     <video playsinline autoplay muted loop style="width: 100%; height: 100%; object-fit: cover;">
-      <source src="./static/videos/teaser_4_video2.mp4" type="video/mp4">
+      <source src="./static/videos/teaser_4_video.mp4" type="video/mp4">
     </video>
   </div>
   <!-- <div class="hero-video is-hidden-tablet is-inline-block-mobile"
@@ -99,13 +140,13 @@
       <div class="container is-size-5">
         <div class="navbar-menu">
           <div class="navbar-end">
-            <a class="navbar-item pl-4 pr-4 paper-link" href="https://arxiv.org/pdf/2506.09366">
+            <a class="navbar-item pl-4 pr-4 paper-link" href="https://arxiv.org/pdf/2506.15953">
               <span class="icon" style="margin-right:5px;">
                 <img src="./static/images/pdf.svg" alt="PDF" />
               </span>
               <span>Paper</span>
             </a>
-            <a class="navbar-item  pl-4 pr-4 arxiv-link" href="https://arxiv.org/abs/2506.09366">
+            <a class="navbar-item  pl-4 pr-4 arxiv-link" href="https://arxiv.org/abs/2506.15953">
               <span class="icon" style="margin-right:5px;">
                 <img src="./static/images/arxiv.svg" alt="ArXiv" />
               </span>
@@ -217,10 +258,17 @@
 
 <section class="section is-small" id="overview">
   <div class="container is-max-desktop">
+<<<<<<< HEAD
     <h2 class="title is-1 has-text-centered is-size-3-mobile">Hardware Setup</h2>
     <!-- <h2 class="title is-1 has-text-centered is-size-4-mobile">Overview</h2> -->
     <img src="./static/images/vitacformer_hardware.png" alt="overview" />
     
+=======
+    <h2 class="title is-1 has-text-centered is-size-3-mobile">Summary Video</h2>
+    <video controls width="100%">
+      <source src="./static/videos/video.mp4" type="video/mp4">
+    </video>
+>>>>>>> 2da5b1b36774ae17c587a0968663518ada21da68
   </div>
 </section>
 
@@ -234,7 +282,7 @@
         Overview of <b>SkillBlender</b>. We first pretrain goal-conditioned primitive expert skills that are task-agnostic, reusable, and physically interpretable, and then reuse and blend these skills to achieve complex whole-body loco-manipulation tasks given <b>only one or two task-specific reward terms</b>.
       </p>
     </div>
-    <h2 class="title is-3 is-size-4-mobile">A Pretrain-then-Blend Paradigm</h2>
+<!--     <h2 class="title is-3 is-size-4-mobile">A Pretrain-then-Blend Paradigm</h2>
     <figure>
     <video autoplay muted loop playsinline controls src="static/videos/method.mp4" width="100%"></video>
     <figcaption></figcaption>
@@ -336,11 +384,11 @@
         <figcaption>PackageCarry</figcaption>
         </figure>
       </div>
-    </div>
+    </div> -->
   </div>
 </section>
 
-<section class="section is-small has-background-black has-text-light" id="benchmark">
+<!-- <section class="section is-small has-background-black has-text-light" id="benchmark">
   <div class="container is-max-desktop">
     <h2 class="title is-1 has-text-centered is-size-3-mobile has-text-white">Benchmark: SkillBench</h2>
     <div class="container is-max-desktop">
@@ -372,7 +420,7 @@
     <br>
   </div>
 </section>
-
+ -->
 
 <section class="section is-small" id="results">
   <div class="container is-max-desktop">
@@ -383,16 +431,46 @@
           Choose task: 
           <div class="select is-small">
               <select id="single-menu-task" onchange="updateMethodVideo()">
-                  <option value="H1_FarReach">H1 FarReach</option>
+                <option value="peg_insertion" selected>peg_insertion</option>
+                <option value="cap_twist">cap_twist</option>
+                <option value="book_flip">book_flip</option>
+                <option value="vase_wipe">vase_wipe</option>
+<!--                   <option value="H1_FarReach">H1 FarReach</option>
                   <option value="H1_BoxPush" selected="selected">H1 BoxPush</option>
                   <option value="H1_PackageCarry">H1 PackageCarry</option>
                   <option value="G1_FarReach">G1 FarReach</option>
                   <option value="G1_ButtonPress">G1 ButtonPress</option>
                   <option value="H1-2_FarReach">H1-2 FarReach</option>
-                  <option value="H1-2_ButtonPress">H1-2 ButtonPress</option>
+                  <option value="H1-2_ButtonPress">H1-2 ButtonPress</option> -->
               </select>
           </div>
-          <br><br><br>
+        <br><br>
+
+        <div class="columns is-centered" id="video-row">
+          <div class="column has-text-centered" id="video-succ">
+            <figure>
+              <video autoplay muted loop playsinline controls src="" width="90%" style="border-radius:10px;"></video>
+              <figcaption><b>Success</b></figcaption>
+            </figure>
+          </div>
+          <div class="column has-text-centered" id="video-fail1">
+            <figure>
+              <video autoplay muted loop playsinline controls src="" width="90%" style="border-radius:10px;"></video>
+              <figcaption><b>Failure 1</b></figcaption>
+            </figure>
+          </div>
+          <div class="column has-text-centered" id="video-fail2">
+            <figure>
+              <video autoplay muted loop playsinline controls src="" width="90%" style="border-radius:10px;"></video>
+              <figcaption><b>Failure 2</b></figcaption>
+            </figure>
+          </div>
+        </div>
+
+      </div>
+    </div>
+<!--   </div> -->
+<!--           <br><br><br>
           <div class="columns is-centered" id="result-video-first-row">
             <div class="columns is-centered has-text-centered" id="result-video-ours">
               <figure>
@@ -442,18 +520,18 @@
             </div>
           </div>
       </div>
-    </div>
+    </div> -->
     <div class="content">
       <p>
         Qualitative comparison between different methods. Our <b>SkillBlender</b> not only achieves <b>higher task accuracy</b>, but also <b>avoids reward hacking</b> and yields more natural and feasible movements.
       </p>
     </div>
-    <h2 class="title is-3 is-size-4-mobile">Skill Blending Decomposition</h2>
+    <h2 class="title is-3 is-size-4-mobile">Long-horizon demonstration</h2>
     <br>
     <div class="columns is-centered">
       <div class="columns is-centered has-text-centered">
         <figure>
-        <video autoplay muted loop playsinline controls src="static/videos/weight.mp4" width="90%"
+        <video autoplay muted loop playsinline controls src="static/videos/hamburger_cut.mp4" width="90%"
               style="border-radius:10px; "></video>
         <figcaption></figcaption>
         </figure>
@@ -465,7 +543,7 @@
       </p>
     </div>
 
-    <h2 class="title is-3 is-size-4-mobile">Primitive Skill Deployment</h2>
+<!--     <h2 class="title is-3 is-size-4-mobile">Primitive Skill Deployment</h2>
     <br>
     <div class="columns is-centered">
       <div class="columns is-centered has-text-centered">
@@ -487,7 +565,7 @@
       <p>
         We also provide a sim2real toolkit support that deploys our simulation-trained primitive skill policies in the real world using a Unitree H1 humanoid robot.
       </p>
-    </div>
+    </div> -->
 
   </div>
 </section>
