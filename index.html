@@ -67,7 +67,7 @@
       updateMethodVideo();
     }
 </script> -->
-<script>
+<!-- <script>
   function updateMethodVideo() {
     const task = document.getElementById("task-selector").value;
     const basePath = `./static/videos/${task}/`;
@@ -79,6 +79,29 @@
     videoSucc.src = basePath + "succ.mp4";
     videoFail1.src = basePath + "fail_1.mp4";
     videoFail2.src = basePath + "fail_2.mp4";
+  }
+
+  function onLoadFunction() {
+    updateMethodVideo();
+  }
+</script> -->
+<script>
+  function updateMethodVideo() {
+    const task = document.getElementById("task-selector").value;
+    const basePath = `static/videos/${task}/`;
+
+    const videoSucc = document.querySelector("#video-succ video");
+    const videoFail1 = document.querySelector("#video-fail1 video");
+    const videoFail2 = document.querySelector("#video-fail2 video");
+
+    videoSucc.src = basePath + "succ.mp4";
+    videoSucc.load();
+
+    videoFail1.src = basePath + "fail_1.mp4";
+    videoFail1.load();
+
+    videoFail2.src = basePath + "fail_2.mp4";
+    videoFail2.load();
   }
 
   function onLoadFunction() {
