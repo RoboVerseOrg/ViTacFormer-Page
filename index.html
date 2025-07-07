@@ -242,7 +242,7 @@
 
 
 
-<section class="section is-small" id="video">
+<!-- <section class="section is-small" id="video">
   <div class="container is-max-desktop">
     <h2 class="title is-1 has-text-centered is-size-3-mobile">Summary</h2>
     <video controls width="100%">
@@ -254,7 +254,32 @@
       </p>
     </div>
   </div>
+</section> -->
+
+<section class="section is-small" id="video">
+  <div class="container is-max-desktop">
+    <h2 class="title is-1 has-text-centered is-size-3-mobile">Summary</h2>
+
+    <!-- 嵌入 YouTube 视频 -->
+    <div class="video-container" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
+      <iframe 
+        src="https://www.youtube.com/embed/V_5EHJd23-I"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        style="position:absolute;top:0;left:0;width:100%;height:100%;">
+      </iframe>
+    </div>
+
+    <div class="content">
+      <p>
+        <b>Dexterous manipulation is a cornerstone capability for robotic systems aiming to interact with the physical world in a human-like manner.</b> Although vision-based methods have advanced rapidly, tactile sensing remains crucial for fine-grained control, particularly in unstructured or visually occluded settings. We present <b>ViTacFormer</b>, a representation-learning approach that couples a cross-attention encoder to fuse high-resolution vision and touch with an autoregressive tactile prediction head that anticipates future contact signals. Building on this architecture, we devise an easy-to-challenging curriculum that steadily refines the visual-tactile latent space, boosting both accuracy and robustness. The learned cross-modal representation drives imitation learning for multi-fingered hands, enabling precise and adaptive manipulation. Across a suite of challenging real-world benchmarks, our method achieves approximately 50% higher success rates than prior state-of-the-art systems. To our knowledge, it is also the first to autonomously complete long-horizon dexterous manipulation tasks that demand highly precise control with an anthropomorphic hand, successfully executing up to 11 sequential stages and sustaining continuous operation for approximately 2.5 minutes.
+      </p>
+    </div>
+  </div>
 </section>
+
 
 <section class="section is-small" id="framework">
   <div class="container is-max-desktop">
